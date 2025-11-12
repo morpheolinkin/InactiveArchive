@@ -1,4 +1,4 @@
-package com.escola.inactivearchive.entities;
+package com.escola.inactivearchive.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

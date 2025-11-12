@@ -1,6 +1,6 @@
 package com.escola.inactivearchive.repository;
 
-import com.escola.inactivearchive.entities.Aluno;
+import com.escola.inactivearchive.models.Aluno;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
