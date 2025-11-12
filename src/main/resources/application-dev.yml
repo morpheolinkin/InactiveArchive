@@ -1,0 +1,21 @@
+# Configurações do Perfil de Desenvolvimento (DEV)
+spring:
+  # Configuração do H2
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  
+  # Configuração da Fonte de Dados (Datasource)
+  datasource:
+    url: jdbc:h2:mem:testdb       # Base de dados H2 em memória
+    driverClassName: org.h2.Driver
+    username: sa
+    password: ""                  # Senha vazia
+  
+  # Configuração do JPA (Java Persistence API)
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect # Especifica o "dialeto" do H2
+    show-sql: true                # Mostra o SQL no terminal (ótimo para debug)
+    hibernate:
+      ddl-auto: update            # Atualiza/Cria a estrutura do banco automaticamente

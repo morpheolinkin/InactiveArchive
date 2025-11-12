@@ -1,0 +1,16 @@
+# Configurações do Perfil de Produção (PROD)
+spring:
+  # Configuração da Fonte de Dados (Datasource) - PostgreSQL
+  datasource:
+    # Ainda vamos configurar isto com o Docker, mas já deixamos o formato
+    url: jdbc:postgresql://localhost:5432/db_gestao_alunos
+    username: postgres
+    password: "admin" # (Definiremos esta senha depois)
+    driverClassName: org.postgresql.Driver
+
+  # Configuração do JPA (Java Persistence API)
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect # Dialeto do PostgreSQL
+    show-sql: false # Não mostrar o SQL em produção (para não poluir os logs)
+    hibernate:
+      ddl-auto: validate # BOA PRÁTICA!
