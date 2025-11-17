@@ -24,7 +24,12 @@
 
     <div class="mb-3">
         <label for="cpf" class="form-label">CPF:</label>
-        <input type="text" th:field="*{cpf}" id="cpf" class="form-control" required>
+        <input type="text" th:field="*{cpf}" id="cpf" class="form-control"
+               th:errorclass="is-invalid" required>
+
+        <div class="invalid-feedback" th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}">
+            Erro no CPF
+        </div>
     </div>
 
     <div class="mb-3">

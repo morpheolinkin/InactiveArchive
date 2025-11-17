@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.br.CPF;
 
 import java.time.LocalDate;
 
@@ -19,6 +20,7 @@ public class Aluno {
     @Column(nullable = false)
     private String nome;
     @Column(nullable = false, unique = true)
+    @CPF(message = "CPF inválido")
     private String cpf;
     @Column(name = "data_nascimento",nullable = false)
     private LocalDate dataNascimento;
