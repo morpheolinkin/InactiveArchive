@@ -11,7 +11,7 @@
 </head>
 <body class="container mt-4">
 
-<h1 class="mb-3">Formulário de Aluno</h1>
+<h1 class="mb-3" th:text="${aluno.id == null} ? 'Novo Cadastro' : 'Editar Aluno'">Formulário</h1>
 
 <form th:action="@{/alunos/salvar}" th:object="${aluno}" method="POST">
 
