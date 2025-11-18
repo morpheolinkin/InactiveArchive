@@ -1,6 +1,8 @@
 package com.escola.inactivearchive.repository;
 
 import com.escola.inactivearchive.models.Aluno;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,10 +15,9 @@ import java.util.List;
 public interface AlunoRepository extends JpaRepository<Aluno, Long> {
     Aluno findByCpf(String cpf);
 
-    // 1. Busca Customizada com JPQL: Procura no NOME ou no CPF
+    // IMPORTANTE: Mudamos o retorno de List<Aluno> para Page<Aluno> e adicionamos Pageable
     @Query("SELECT a FROM Aluno a WHERE lower(a.nome) LIKE lower(concat('%', :termo, '%')) OR a.cpf LIKE concat('%', :termo, '%')")
-    List<Aluno> buscarPorNomeOuCpf(@Param("termo") String termo);
+    Page<Aluno> buscarPorNomeOuCpf(@Param("termo") String termo, Pageable pageable);
 
-    // 2. Busca por Data de Nascimento exata
     List<Aluno> findByDataNascimento(LocalDate dataNascimento);
 }
