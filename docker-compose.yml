@@ -1,0 +1,17 @@
+services:
+  # Nome do serviço
+  postgres:
+    image: postgres:15-alpine # Imagem leve do PostgreSQL
+    container_name: gestao-alunos-db
+    ports:
+      - "5432:5432" # Porta Externa : Porta Interna
+    environment:
+      - POSTGRES_DB=db_gestao_alunos
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # Salva os dados mesmo se desligar o container
+    restart: always
+
+volumes:
+  postgres_data:
