@@ -11,4 +11,5 @@ spring:
     #database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: false # Não mostrar o SQL em produção (para não poluir os logs)
     hibernate:
-      ddl-auto: validate # BOA PRÁTICA!
+      ddl-auto: update # BOA PRÁTICA!
+    open-in-view: false
