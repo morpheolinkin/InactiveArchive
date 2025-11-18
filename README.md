@@ -62,7 +62,7 @@ A aplicação conta com uma identidade visual personalizada, respeitando as core
 
 1.  **Clone o repositório:**
     ```bash
-    git clone [https://github.com/morpheolinkin/InactiveArchive.git](https://github.com/morpheolinkin/InactiveArchive.git)
+    git clone https://github.com/morpheolinkin/InactiveArchive.git
     cd InactiveArchive
     ```
 
@@ -84,8 +84,8 @@ A aplicação conta com uma identidade visual personalizada, respeitando as core
 
 Para acessar o sistema, utilize o usuário administrativo padrão:
 
-* **Usuário:** `admin`
-* **Senha:** `123456`
+* **Usuário:** `inep`
+* **Senha:** `29057140`
 
 ---
 
