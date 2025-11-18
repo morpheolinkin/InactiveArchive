@@ -11,10 +11,14 @@
 <h1 class="mb-3">Arquivo de Alunos Inativos</h1>
 
 <div class="row mb-3">
-    <div class="col-md-4">
-        <a th:href="@{/alunos/novo}" class="btn btn-primary w-100">
-            <i class="bi bi-plus-circle"></i> Cadastrar Novo Aluno
+    <div class="col-md-4 d-flex gap-2"> <a th:href="@{/alunos/novo}" class="btn btn-primary flex-fill">
+        <i class="bi bi-plus-circle"></i> Novo Aluno
+    </a>
+
+        <a th:href="@{/alunos/relatorio}" class="btn btn-danger flex-fill" target="_blank">
+            <i class="bi bi-file-earmark-pdf"></i> Relatório PDF
         </a>
+
     </div>
     <div class="col-md-8">
         <form th:action="@{/alunos}" method="GET" class="d-flex">

@@ -2,21 +2,46 @@ package com.escola.inactivearchive.controllers;
 
 import com.escola.inactivearchive.models.Aluno;
 import com.escola.inactivearchive.services.AlunoService;
+import com.escola.inactivearchive.services.RelatorioService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Controller
 @RequestMapping("/alunos")
 public class AlunoController {
     public final AlunoService alunoService;
+    public final RelatorioService relatorioService;
 
-    public AlunoController(AlunoService alunoService) {
+    public AlunoController(AlunoService alunoService, RelatorioService relatorioService) {
         this.alunoService = alunoService;
+        this.relatorioService = relatorioService;
+    }
+
+    @GetMapping("/relatorio")
+    public void gerarRelatorioPdf(HttpServletResponse response) throws IOException {
+        // 1. Define que o retorno é um PDF
+        response.setContentType("application/pdf");
+
+        // 2. Define o cabeçalho para forçar o download com um nome bonito (com data e hora atual)
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=alunos_" + currentDateTime + ".pdf";
+        response.setHeader(headerKey, headerValue);
+
+        // 3. Chama o serviço para escrever o PDF direto na resposta
+        relatorioService.exportarPdf(response);
     }
 
     // ATUALIZADO: Agora aceita um parâmetro de busca opcional
