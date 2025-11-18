@@ -43,8 +43,8 @@ public class SecurityConfig {
         // 5. Definindo o usuário ADMIN em memória
         // AVISO: Em produção real, isso viria do Banco de Dados, mas para uso interno isso resolve.
         UserDetails admin = User.withDefaultPasswordEncoder() // "withDefault" é apenas para testes/estudos
-                .username("admin")
-                .password("123456") // <--- A SENHA É ESSA AQUI
+                .username("inep")
+                .password("29057140") // <--- A SENHA É ESSA AQUI
                 .roles("ADMIN")
                 .build();
 
