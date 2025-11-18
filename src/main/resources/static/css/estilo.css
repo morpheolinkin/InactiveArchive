@@ -1,0 +1,110 @@
+:root {
+    /* Paleta de Cores Personalizada */
+    --cor-terra: #8B4513;    /* SaddleBrown: Remete à terra/ancestralidade */
+    --cor-natureza: #2E8B57; /* SeaGreen: Remete à mata */
+    --cor-areia: #FDF5E6;    /* OldLace: Fundo suave para leitura */
+    --cor-texto: #333333;
+}
+
+body {
+    background-color: var(--cor-areia);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--cor-texto);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Garante que o rodapé fique lá embaixo */
+}
+
+/* --- CABEÇALHO (HERO) --- */
+.hero-header {
+    /* Imagem de fundo com uma sobreposição escura para o texto aparecer */
+    background: linear-gradient(rgba(46, 139, 87, 0.85), rgba(139, 69, 19, 0.85)),
+    url('https://images.unsplash.com/photo-1577896335470-52c7aba49f6e?q=80&w=1920&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 3rem 0;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-bottom: 5px solid var(--cor-terra);
+}
+
+.escola-nome {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0.9;
+    font-weight: 600;
+}
+
+.sistema-titulo {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-top: 0.5rem;
+    font-family: 'Georgia', serif; /* Fonte com serifa para dar ar de documento/arquivo */
+}
+
+/* --- TABELA E CONTEÚDO --- */
+.card-custom {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.05);
+    background-color: white;
+    padding: 20px;
+}
+
+.table-header-custom {
+    background-color: var(--cor-natureza) !important;
+    color: white;
+}
+
+.btn-terra {
+    background-color: var(--cor-terra);
+    color: white;
+    border: none;
+}
+.btn-terra:hover {
+    background-color: #5D2E0C; /* Tom mais escuro */
+    color: white;
+}
+
+/* --- RODAPÉ --- */
+.footer {
+    background-color: #2c2c2c;
+    color: #b0b0b0;
+    padding: 2rem 0;
+    margin-top: auto; /* Empurra o rodapé para o final */
+    border-top: 4px solid var(--cor-natureza);
+}
+
+.dev-link {
+    color: var(--cor-natureza);
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+.dev-link:hover {
+    color: #fff;
+}
+
+.logo-escola {
+    height: 80px; /* Tamanho fixo para a logo */
+    width: auto;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); /* Sombra suave na imagem */
+    transition: transform 0.3s;
+}
+
+.logo-escola:hover {
+    transform: scale(1.05); /* Efeito de zoom leve ao passar o mouse */
+}
+
+/* Ajuste para telas pequenas (celular) */
+@media (max-width: 768px) {
+    .hero-header {
+        text-align: center !important;
+    }
+    .header-content {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
