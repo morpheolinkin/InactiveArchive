@@ -108,7 +108,7 @@ Atualmente, pode ser hospedado em serviços como **Render**, **Railway** ou **AW
   <tr>
     <td text-align="center">
       <a href="https://linkedin.com/in/jefferson-morpheus">
-        <img src="https://avatars.githubusercontent.com/u/0?v=4" width="100px;" alt="Foto do Jefferson"/><br>
+        <img src="src/main/resources/static/img/jeff.png" width="120px;" alt="Foto do Jefferson" height="150px;"/><br>
         <sub>
           <b>Jefferson Medeiros da Silva</b>
         </sub>
