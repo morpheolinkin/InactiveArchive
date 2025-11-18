@@ -79,8 +79,7 @@ public class AlunoController {
     }
 
     @PostMapping("/salvar")
-    public String salvarAluno(@Valid @ModelAttribute("aluno")
-                                  Aluno aluno, BindingResult result, Model model) { // 1. @Valid e BindingResult
+    public String salvarAluno(@Valid @ModelAttribute("aluno") Aluno aluno, BindingResult result) { // 1. @Valid e BindingResult
 
         // 2. Se houver erro de validação (Ex: CPF inválido), volta para o formulário
         if (result.hasErrors()) {

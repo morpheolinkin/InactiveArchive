@@ -11,7 +11,6 @@ import java.util.List;
 
 @Repository
 public interface AlunoRepository extends JpaRepository<Aluno, Long> {
-    boolean existsByCpf(String cpf);
     Aluno findByCpf(String cpf);
 
     // 1. Busca Customizada com JPQL: Procura no NOME ou no CPF

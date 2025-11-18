@@ -57,7 +57,7 @@ public class AlunoService {
                         "Aluno com ID " + id + " não foi encontrado."));
     }
 
-    public Aluno salvar(Aluno aluno) {
+    public void salvar(Aluno aluno) {
         // 1. Verifica se já existe ALGUÉM com esse CPF
         // O repositório retorna o Aluno se achar, ou null se não achar (precisamos criar esse método findByCpf)
         Aluno alunoComCpfExistente = alunoRepository.findByCpf(aluno.getCpf());
@@ -68,7 +68,7 @@ public class AlunoService {
             throw new RegraNegocioException("Já existe um aluno cadastrado com o CPF: " + aluno.getCpf());
         }
 
-        return alunoRepository.save(aluno);
+        alunoRepository.save(aluno);
     }
 
     public void excluir(Long id) {
