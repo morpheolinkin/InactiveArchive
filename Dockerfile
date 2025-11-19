@@ -1,12 +1,12 @@
-# Etapa 1: Build (Construção)
+# Etapa 1: Build (Construção) usando Maven e Java 17
 FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
 COPY pom.xml .
 COPY src ./src
-# Empacota o projeto pulando os testes para ser mais rápido no deploy
+# Empacota o projeto
 RUN mvn clean package -DskipTests
 
-# Etapa 2: Runtime (Execução)
+# Etapa 2: Runtime (Execução) usando Java 17 leve (Alpine)
 FROM eclipse-temurin:17-jdk-alpine
 WORKDIR /app
 # Copia o arquivo .jar gerado na etapa anterior

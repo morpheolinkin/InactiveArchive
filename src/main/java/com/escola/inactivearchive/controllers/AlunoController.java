@@ -3,6 +3,8 @@ package com.escola.inactivearchive.controllers;
 import com.escola.inactivearchive.models.Aluno;
 import com.escola.inactivearchive.services.AlunoService;
 import com.escola.inactivearchive.services.RelatorioService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -18,6 +20,7 @@ import java.util.Date;
 
 @Controller
 @RequestMapping("/alunos")
+@Tag(name = "Alunos", description = "Gerenciamento de cadastro, edição e listagem de alunos") // <--- Título da seção
 public class AlunoController {
 
     private final AlunoService alunoService;
@@ -29,6 +32,8 @@ public class AlunoController {
     }
 
     @GetMapping
+    @Operation(summary = "Listar Alunos",
+            description = "Retorna a página HTML com a lista paginada de alunos. Permite busca por nome/cpf.") // <--- Explicação
     public String listarAlunos(
             @RequestParam(value = "nome", required = false) String nome,
             @RequestParam(value = "page", defaultValue = "0") int page, // Recebe a página da URL (ex: ?page=1)
@@ -58,6 +63,17 @@ public class AlunoController {
     }
 
     @GetMapping("/editar/{id}")
+    @Operation(
+            summary = "Mostrar formulário de edição",
+            description = "Carrega os dados do aluno identificado por 'id' e exibe o formulário para edição.",
+            parameters = {
+                    @io.swagger.v3.oas.annotations.Parameter(name = "id", description = "ID do aluno", required = true)
+            },
+            responses = {
+                    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Formulário de edição carregado com sucesso"),
+                    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Aluno não encontrado")
+            }
+    )
     public String mostrarFormularioEdicao(@PathVariable Long id, Model model) {
         Aluno aluno = alunoService.buscarPorId(id);
         model.addAttribute("aluno", aluno);
@@ -65,6 +81,8 @@ public class AlunoController {
     }
 
     @PostMapping("/salvar")
+    @Operation(summary = "Salvar Aluno",
+            description = "Recebe os dados do formulário e salva um novo aluno ou atualiza um existente.")
     public String salvarAluno(@Valid @ModelAttribute("aluno") Aluno aluno, BindingResult result, Model model) {
         // Se houver erro de validação (CPF inválido, Nome vazio), volta para o form
         if (result.hasErrors()) {
@@ -76,12 +94,15 @@ public class AlunoController {
     }
 
     @GetMapping("/excluir/{id}")
+    @Operation(summary = "Excluir Aluno", description = "Exclui um aluno pelo ID.")
     public String excluirAluno(@PathVariable Long id) {
         alunoService.excluir(id);
         return "redirect:/alunos";
     }
 
     @GetMapping("/relatorio")
+    @Operation(summary = "Gerar Relatório PDF",
+            description = "Gera e baixa um relatório em PDF contendo a lista de todos os alunos.")
     public void gerarRelatorioPdf(HttpServletResponse response) throws IOException {
         response.setContentType("application/pdf");
 
