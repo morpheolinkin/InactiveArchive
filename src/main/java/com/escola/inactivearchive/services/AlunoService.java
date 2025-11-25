@@ -12,6 +12,16 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 
+/**
+ * Serviço responsável pelas Regras de Negócio relacionadas aos Alunos.
+ * <p>
+ * Aqui são realizadas as validações de CPF duplicado, conversões de data
+ * para a busca inteligente e a lógica de paginação.
+ * </p>
+ *
+ * @author Jefferson Medeiros
+ * @since 1.0
+ */
 @Service
 public class AlunoService {
 
@@ -22,10 +32,15 @@ public class AlunoService {
     }
 
     /**
-     * Lista alunos com paginação e ordenação.
-     * @param termoBusca Nome, CPF ou Data (pode ser nulo).
-     * @param pagina Número da página atual (começa em 0).
-     * @return Uma Página (Page) de alunos.
+     * Realiza a busca paginada de alunos.
+     * <p>
+     * Este método identifica automaticamente se o termo de busca é uma DATA ou um TEXTO.
+     * Se for data, busca exata. Se for texto, busca parcial por Nome ou CPF.
+     * </p>
+     *
+     * @param termoBusca Pode ser um Nome, um CPF ou uma Data (dd/MM/yyyy ou yyyy-MM-dd).
+     * @param pagina     O índice da página atual (inicia em 0).
+     * @return Uma página (Page) contendo os alunos encontrados, ordenada por ‘ID’.
      */
     public Page<Aluno> listarTodos(String termoBusca, int pagina) {
         int itensPorPagina = 10; // Define quantos alunos aparecem por página
@@ -54,17 +69,28 @@ public class AlunoService {
 
     /**
      * Método auxiliar para o Relatório PDF (que precisa da lista completa, sem páginas).
+     * <p>
+     * public List<Aluno> listarTodosParaRelatorio() {
+     * return alunoRepository.findAll(Sort.by("id").ascending());
+     * }
      */
-    public List<Aluno> listarTodosParaRelatorio() {
-        return alunoRepository.findAll(Sort.by("id").ascending());
-    }
 
     public Aluno buscarPorId(Long id) {
         return alunoRepository.findById(id)
                 .orElseThrow(() -> new RecursoNaoEncontradoException("Aluno com ID " + id + " não encontrado."));
     }
 
-    public Aluno salvar(Aluno aluno) {
+    /**
+     * Salva ou atualiza um aluno no banco de dados.
+     * <p>
+     * Regra de Negócio: Não permite dois alunos com o mesmo CPF,
+     * exceto se for o próprio aluno sendo editado.
+     * </p>
+     *
+     * @param aluno Objeto aluno vindo do formulário.
+     * @throws RegraNegocioException se o CPF já existir em outro cadastro.
+     */
+    public void salvar(Aluno aluno) {
         // Verifica duplicidade de CPF apenas na criação ou se o CPF mudou na edição
         Aluno alunoExistente = alunoRepository.findByCpf(aluno.getCpf());
 
@@ -72,7 +98,7 @@ public class AlunoService {
             throw new RegraNegocioException("Já existe um aluno cadastrado com o CPF: " + aluno.getCpf());
         }
 
-        return alunoRepository.save(aluno);
+        alunoRepository.save(aluno);
     }
 
     public void excluir(Long id) {
@@ -82,7 +108,13 @@ public class AlunoService {
         alunoRepository.deleteById(id);
     }
 
-    // Método utilitário para detetar data
+    /**
+     * Tenta converter uma ‘String’ genérica para um objeto LocalDate.
+     * Suporta formatos brasileiros (dd/MM/yyyy) e ISO (yyyy-MM-dd).
+     *
+     * @param termo A ‘string’ digitada pelo usuário.
+     * @return LocalDate se a conversão for bem-sucedida, ou null se não for uma data.
+     */
     private LocalDate tentarConverterParaData(String termo) {
         try {
             return LocalDate.parse(termo, DateTimeFormatter.ofPattern("dd/MM/yyyy"));

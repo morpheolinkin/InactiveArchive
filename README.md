@@ -101,6 +101,24 @@ Atualmente, pode ser hospedado em serviços como **Render**, **Railway** ou **AW
 * `SPRING_DATASOURCE_PASSWORD`: `sua_senha`
 
 ---
+```mermaid
+graph TD
+    User((Usuário)) -->|Acessa /alunos| Controller[AlunoController]
+    Controller -->|Chama| Service[AlunoService]
+    
+    subgraph Regras de Negócio
+    Service -->|Verifica CPF| Repo[AlunoRepository]
+    Service -->|Valida Data| Util[Conversor Data]
+    end
+    
+    Repo -->|SQL| DB[(PostgreSQL)]
+    
+    DB -->|Retorna Dados| Repo
+    Repo -->|Entidades| Service
+    Service -->|Lista Paginada| Controller
+    Controller -->|Renderiza HTML| View[Thymeleaf Templates]
+    View -->|Página Web| User
+```
 
 ## 👨‍💻 Desenvolvedor
 
@@ -120,3 +138,7 @@ Atualmente, pode ser hospedado em serviços como **Render**, **Railway** ou **AW
 Feito com ❤️ e Java.
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/jefferson-morpheus)
+
+## 📐 Arquitetura do Sistema
+
+Abaixo, o fluxo simplificado de como o sistema processa um cadastro:

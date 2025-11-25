@@ -8,6 +8,6 @@ public class LoginController {
 
     @GetMapping("/login")
     public String login() {
-        return "login"; // Vai buscar o arquivo login.html
+        return "login"; // Vai buscar o arquivo ‘login’.html
     }
 }
