@@ -101,6 +101,9 @@ Atualmente, pode ser hospedado em serviços como **Render**, **Railway** ou **AW
 * `SPRING_DATASOURCE_PASSWORD`: `sua_senha`
 
 ---
+## 📐 Arquitetura do Sistema
+
+Abaixo, o fluxo simplificado de como o sistema processa um cadastro:
 ```mermaid
 graph TD
     User((Usuário)) -->|Acessa /alunos| Controller[AlunoController]
@@ -138,7 +141,3 @@ graph TD
 Feito com ❤️ e Java.
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/jefferson-morpheus)
-
-## 📐 Arquitetura do Sistema
-
-Abaixo, o fluxo simplificado de como o sistema processa um cadastro:
