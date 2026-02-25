@@ -84,6 +84,10 @@ public class AlunoController {
     @GetMapping("/novo")
     public String mostrarFormularioCadastro(Model model) {
         model.addAttribute("aluno", new Aluno());
+
+        // Envia o próximo ID calculado para a caixinha azul no HTML
+        model.addAttribute("proximoId", alunoService.obterProximoId());
+
         return "form-aluno";
     }
 

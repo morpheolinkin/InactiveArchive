@@ -28,52 +28,64 @@
 </header>
 
 <main class="container">
-    <div class="card-custom col-md-8 mx-auto"> <form th:action="@{/alunos/salvar}" th:object="${aluno}" method="POST">
-        <input type="hidden" th:field="*{id}" />
+    <div class="card-custom col-md-8 mx-auto">
+        <form th:action="@{/alunos/salvar}" th:object="${aluno}" method="POST">
+            <input type="hidden" th:field="*{id}" />
 
-        <div class="mb-3">
-            <label for="nome" class="form-label fw-bold text-secondary">Nome Completo do Aluno</label>
-            <div class="input-group">
-                <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
-                <input type="text" th:field="*{nome}" id="nome" class="form-control text-uppercase"
-                       placeholder="Ex: JOÃO DA SILVA" required>
-            </div>
-            <div class="text-danger small" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">Erro</div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label for="cpf" class="form-label fw-bold text-secondary">CPF</label>
-                <div class="input-group">
-                    <span class="input-group-text"><i class="bi bi-card-heading"></i></span>
-                    <input type="text" th:field="*{cpf}" id="cpf" class="form-control"
-                           placeholder="000.000.000-00" th:errorclass="is-invalid" required>
-                </div>
-                <div class="invalid-feedback" th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}">Erro CPF</div>
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <label for="dataNascimento" class="form-label fw-bold text-secondary">Data de Nascimento</label>
-                <div class="input-group">
-                    <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
-                    <input type="date" th:field="*{dataNascimento}" id="dataNascimento" class="form-control" required>
+            <div class="alert alert-primary shadow-sm mb-4 border-0" style="background-color: #e0f0ff;" th:if="${proximoId != null and aluno.id == null}">
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-info-circle-fill fs-3 text-primary me-3"></i>
+                    <div>
+                        <h5 class="alert-heading mb-1 fw-bold text-primary">Localizador da Pasta</h5>
+                        <p class="mb-0 text-dark">O ID deste arquivo será o número: <strong style="font-size: 1.4em;" th:text="${proximoId}">2301</strong></p>
+                        <small class="text-muted">Você já pode anotar este número na pasta física antes de salvar.</small>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <hr class="my-4">
+            <div class="mb-3">
+                <label for="nome" class="form-label fw-bold text-secondary">Nome Completo do Aluno</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+                    <input type="text" th:field="*{nome}" id="nome" class="form-control text-uppercase"
+                           placeholder="Ex: JOÃO DA SILVA" required>
+                </div>
+                <div class="text-danger small" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">Erro</div>
+            </div>
 
-        <div class="d-flex justify-content-between">
-            <a th:href="@{/alunos}" class="btn btn-outline-secondary">
-                <i class="bi bi-arrow-left"></i> Voltar
-            </a>
-            <button type="submit" class="btn btn-natureza btn-success btn-lg px-5"
-                    style="background-color: var(--cor-natureza); border: none;">
-                <i class="bi bi-check-circle-fill"></i> Salvar Dados
-            </button>
-        </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="cpf" class="form-label fw-bold text-secondary">CPF</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-card-heading"></i></span>
+                        <input type="text" th:field="*{cpf}" id="cpf" class="form-control"
+                               placeholder="000.000.000-00" th:errorclass="is-invalid" required>
+                    </div>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}">Erro CPF</div>
+                </div>
 
-    </form>
+                <div class="col-md-6 mb-3">
+                    <label for="dataNascimento" class="form-label fw-bold text-secondary">Data de Nascimento</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                        <input type="date" th:field="*{dataNascimento}" id="dataNascimento" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-4">
+
+            <div class="d-flex justify-content-between">
+                <a th:href="@{/alunos}" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left"></i> Voltar
+                </a>
+                <button type="submit" class="btn btn-natureza btn-success btn-lg px-5"
+                        style="background-color: var(--cor-natureza); border: none;">
+                    <i class="bi bi-check-circle-fill"></i> Salvar Dados
+                </button>
+            </div>
+
+        </form>
     </div>
 </main>
 

@@ -96,10 +96,17 @@ public class AlunoService {
      * @throws RegraNegocioException se o CPF já existir em outro cadastro.
      */
     public void salvar(Aluno aluno) {
+        // 1. VALIDAÇÃO DE CPF
+        // Busca no banco se já existe alguém com esse CPF
         Aluno alunoExistente = alunoRepository.findByCpf(aluno.getCpf());
 
-        if (alunoExistente != null && !alunoExistente.getId().equals(aluno.getId())) {
-            throw new RegraNegocioException("Já existe um aluno cadastrado com o CPF: " + aluno.getCpf());
+        if (alunoExistente != null) {
+            // Entramos aqui se o CPF já existe no banco. Mas precisamos saber:
+            // É um aluno NOVO tentando roubar um CPF? (aluno.getId() == null)
+            // OU é uma EDIÇÃO de um aluno tentando usar o CPF de outro? (!alunoExistente.getId().equals(aluno.getId()))
+            if (aluno.getId() == null || !alunoExistente.getId().equals(aluno.getId())) {
+                throw new RegraNegocioException("Já existe um aluno cadastrado com o CPF: " + aluno.getCpf());
+            }
         }
 
         // 2. ATRIBUIÇÃO MANUAL DO ID SEQUENCIAL
