@@ -17,6 +17,8 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.sql.Connection;
+import javax.sql.DataSource;
 
 @Configuration
 public class CargaDados {
@@ -100,9 +102,30 @@ public class CargaDados {
 
                         System.out.println(">>> RESUMO: Importados: " + importados + " | Ignorados: " + ignorados + " <<<");
 
-                        // Ajusta sequência
-                        jdbcTemplate.execute("SELECT setval(pg_get_serial_sequence('public.alunos', 'id'), COALESCE((SELECT MAX(id) FROM public.alunos) + 1, 1), false)");
-                        System.out.println(">>> Sequência do banco ajustada! <<<");
+                        // Ajusta sequência de acordo com o banco ativo (Postgres x H2)
+                        DataSource ds = jdbcTemplate.getDataSource();
+                        if (ds == null) {
+                            logger.warn("DataSource é null - não é possível ajustar sequência automaticamente.");
+                        } else {
+                            try (Connection conn = ds.getConnection()) {
+                                String dbName = conn.getMetaData().getDatabaseProductName().toLowerCase();
+                                if (dbName.contains("postgres")) {
+                                    // Postgres: usa setval para a sequência
+                                    jdbcTemplate.execute("SELECT setval(pg_get_serial_sequence('public.alunos', 'id'), COALESCE((SELECT MAX(id) FROM public.alunos) + 1, 1), false)");
+                                } else if (dbName.contains("h2")) {
+                                    // H2: reinicia a identity da coluna
+                                    Long max = jdbcTemplate.queryForObject("SELECT COALESCE(MAX(id), 0) FROM alunos", Long.class);
+                                    long next = (max == null ? 1L : max + 1L);
+                                    jdbcTemplate.execute("ALTER TABLE alunos ALTER COLUMN id RESTART WITH " + next);
+                                } else {
+                                    System.out.println(">>> Banco não suportado para ajuste automático de sequência: " + dbName + " - pulando.");
+                                }
+                                System.out.println(">>> Sequência do banco ajustada! <<<");
+                            } catch (Exception e) {
+                                logger.error(">>> Erro ajustando sequência: {}", e.getMessage(), e);
+                            }
+                        }
+
                     }
 
                 } catch (Exception e) {
