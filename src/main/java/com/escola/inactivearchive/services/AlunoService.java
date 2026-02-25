@@ -80,7 +80,6 @@ public class AlunoService {
                 .orElseThrow(() -> new RecursoNaoEncontradoException("Aluno com ID " + id + " não encontrado."));
     }
 
-    // Método para calcular o próximo ID (usado tanto no salvar quanto no Controller para mostrar na tela)
     public Long obterProximoId() {
         return alunoRepository.obterMaiorId() + 1;
     }
