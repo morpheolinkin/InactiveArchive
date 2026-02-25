@@ -15,7 +15,6 @@ spring:
   
   # Configuração do JPA (Java Persistence API)
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect # Especifica o "dialeto" do H2
     show-sql: true                # Mostra o SQL no terminal (ótimo para debug)
     properties:
       hibernate:

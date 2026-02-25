@@ -6,6 +6,8 @@ import com.opencsv.CSVParser;
 import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +24,8 @@ import javax.sql.DataSource;
 
 @Configuration
 public class CargaDados {
+
+    private static final Logger logger = LoggerFactory.getLogger(CargaDados.class);
 
     @Bean
     CommandLineRunner iniciarBancoDeDados(AlunoRepository alunoRepository, JdbcTemplate jdbcTemplate) {
@@ -95,7 +99,7 @@ public class CargaDados {
                                 importados++;
 
                             } catch (Exception e) {
-                                System.err.println("ERRO CRÍTICO na linha " + linhaAtual + ": " + e.getMessage());
+                                logger.error("ERRO CRÍTICO na linha {}: {}", linhaAtual, e.getMessage());
                                 ignorados++;
                             }
                         }
@@ -129,8 +133,7 @@ public class CargaDados {
                     }
 
                 } catch (Exception e) {
-                    System.err.println(">>> ERRO GERAL: " + e.getMessage());
-                    e.printStackTrace();
+                    logger.error(">>> ERRO GERAL: {}", e.getMessage(), e);
                 }
             } else {
                 System.out.println(">>> O Banco já tem dados. Nada foi feito. <<<");

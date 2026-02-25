@@ -26,7 +26,7 @@ import java.util.Date;
  *   <li>Salvar e excluir alunos</li>
  *   <li>Gerar relatório em PDF</li>
  * </ul>
- *
+ * <p>
  * Mapeado em '/alunos'.
  * Depende de {@link com.escola.inactivearchive.services.AlunoService} e
  * {@link com.escola.inactivearchive.services.RelatorioService}.
@@ -43,7 +43,7 @@ public class AlunoController {
     /**
      * Construtor do controlador de alunos.
      *
-     * @param alunoService Serviço responsável por operações relacionadas a alunos.
+     * @param alunoService     Serviço responsável por operações relacionadas a alunos.
      * @param relatorioService Serviço responsável por gerar relatórios.
      */
     public AlunoController(AlunoService alunoService, RelatorioService relatorioService) {
@@ -54,8 +54,8 @@ public class AlunoController {
     /**
      * Lista alunos com suporte a paginação e filtro por nome.
      *
-     * @param nome Nome do aluno para filtro (opcional).
-     * @param page Número da página a ser exibida (padrão: 0).
+     * @param nome  Nome do aluno para filtro (opcional).
+     * @param page  Número da página a ser exibida (padrão: 0).
      * @param model Objeto para adicionar atributos à view.
      * @return Nome da view para exibir a lista de alunos.
      */
@@ -94,7 +94,7 @@ public class AlunoController {
     /**
      * Exibe o formulário para editar um aluno existente.
      *
-     * @param id ID do aluno a ser editado.
+     * @param id    ID do aluno a ser editado.
      * @param model Objeto para adicionar atributos à view.
      * @return Nome da view para o formulário de edição.
      */
@@ -108,9 +108,9 @@ public class AlunoController {
     /**
      * Salva um aluno (novo ou editado) no banco de dados.
      *
-     * @param aluno Objeto aluno a ser salvo.
+     * @param aluno  Objeto aluno a ser salvo.
      * @param result Resultado da validação do formulário.
-     * @param model Objeto para adicionar atributos à view.
+     * @param model  Objeto para adicionar atributos à view.
      * @return Redireciona para a lista de alunos ou retorna ao formulário em caso de erro.
      */
     @PostMapping("/salvar")
