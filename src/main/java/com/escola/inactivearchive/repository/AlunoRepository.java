@@ -20,4 +20,8 @@ public interface AlunoRepository extends JpaRepository<Aluno, Long> {
     Page<Aluno> buscarPorNomeOuCpf(@Param("termo") String termo, Pageable pageable);
 
     List<Aluno> findByDataNascimento(LocalDate dataNascimento);
+
+    // Busca o maior ID. O COALESCE garante que, se o banco estiver vazio, ele retorne 0.
+    @Query("SELECT COALESCE(MAX(a.id), 0) FROM Aluno a")
+    Long obterMaiorId();
 }

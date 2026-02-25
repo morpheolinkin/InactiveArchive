@@ -80,6 +80,11 @@ public class AlunoService {
                 .orElseThrow(() -> new RecursoNaoEncontradoException("Aluno com ID " + id + " não encontrado."));
     }
 
+    // Método para calcular o próximo ID (usado tanto no salvar quanto no Controller para mostrar na tela)
+    public Long obterProximoId() {
+        return alunoRepository.obterMaiorId() + 1;
+    }
+
     /**
      * Salva ou atualiza um aluno no banco de dados.
      * <p>
@@ -91,13 +96,22 @@ public class AlunoService {
      * @throws RegraNegocioException se o CPF já existir em outro cadastro.
      */
     public void salvar(Aluno aluno) {
-        // Verifica duplicidade de CPF apenas na criação ou se o CPF mudou na edição
         Aluno alunoExistente = alunoRepository.findByCpf(aluno.getCpf());
 
         if (alunoExistente != null && !alunoExistente.getId().equals(aluno.getId())) {
             throw new RegraNegocioException("Já existe um aluno cadastrado com o CPF: " + aluno.getCpf());
         }
 
+        // 2. ATRIBUIÇÃO MANUAL DO ID SEQUENCIAL
+        // Se o ID for nulo, significa que é um NOVO cadastro.
+        // É aqui que garantimos que ele pegue o próximo número sem deixar buracos!
+        if (aluno.getId() == null) {
+            Long proximoId = obterProximoId();
+            aluno.setId(proximoId);
+        }
+
+        // Se for edição (ID não nulo), o Spring Data JPA vai apenas atualizar (UPDATE).
+        // Se for novo (ID que acabamos de setar), ele vai inserir (INSERT).
         alunoRepository.save(aluno);
     }
 
